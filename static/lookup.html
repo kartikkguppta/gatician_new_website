@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Quick Transporter Lookup — Gatician</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script defer src="/scripts.js"></script>
+    <style>
+      .lookup-page{padding:48px 0;background:var(--surface)}
+      .lookup-panel{max-width:880px;margin:26px auto;padding:28px;border-radius:20px;background:linear-gradient(180deg,#fff,#fbfdff);box-shadow:var(--shadow);display:flex;align-items:center;gap:18px}
+      .lookup-form{flex:1}
+      .lookup-actions{width:120px;display:flex;flex-direction:column;gap:12px}
+      .lookup-actions .btn{border-radius:28px;padding:14px 18px}
+      .search-input,.phone-input{border-radius:18px;padding:14px 16px;border:1px solid rgba(11,103,208,0.06);width:100%;font-size:1rem}
+      .kicker{color:var(--muted);font-size:0.95rem}
+      .panel-note{color:var(--muted);margin-top:8px}
+      @media(max-width:760px){.lookup-panel{flex-direction:column}.lookup-actions{width:100%;flex-direction:row}}
+    </style>
+  </head>
+  <body>
+    <header>
+      <div style="display:flex;align-items:center;gap:12px;justify-content:space-between;max-width:1180px;margin:0 auto;padding:8px 20px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <img src="/assets/Gatician%20Logo.png" alt="Gatician Logo" style="height:42px;width:auto;border-radius:6px;background:white;padding:4px"/>
+          <div style="display:flex;flex-direction:column">
+            <div class="brand">Gatician Solutions Pvt. Ltd</div>
+            <div class="brand-sub">Your go to Logistics Partner</div>
+          </div>
+        </div>
+        <nav class="site-nav">
+          <button class="nav-toggle" aria-label="Open menu">☰</button>
+          <ul class="nav-list" role="menu">
+            <li><a href="/" style="color:white;text-decoration:none;font-weight:600">Home</a></li>
+            <li><a href="/team" style="color:white;text-decoration:none;font-weight:600">Team</a></li>
+            <li><a href="/lookup" style="color:white;text-decoration:none;font-weight:600">Lookup</a></li>
+            <li><a class="btn login-outline" href="https://gatician-gps.vercel.app/login" target="_blank" rel="noopener noreferrer">Login</a></li>
+            <li><button class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+            <svg data-icon="sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><path d="M12 2v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="lookup-page">
+      <div class="lookup-panel">
+        <div class="lookup-form">
+          <h3 style="margin:0 0 8px">Quick Transporter Lookup</h3>
+          <p class="panel-note">Search by company, location, or phone.</p>
+          <div style="margin-top:12px;display:grid;gap:12px">
+            <input id="q_full" class="search-input" placeholder="Search company, location or mobile" />
+            <input id="mobile_full" class="phone-input" placeholder="Enter mobile or landline" />
+            <div id="results_full" class="panel-note"></div>
+          </div>
+        </div>
+
+        <div class="lookup-actions">
+          <button id="search_full" class="btn">Search</button>
+          <button id="lookup_full" class="btn secondary">Lookup</button>
+        </div>
+      </div>
+      <div style="max-width:1180px;margin:18px auto;padding:0 20px">
+        <div class="small muted">Tip: Enter full or partial company name, city, or a phone number to search the directory.</div>
+      </div>
+    </main>
+
+    <script>
+      // hook into existing API endpoints; reuse helpers from index
+      const el = id => document.getElementById(id);
+      async function doSearchFull(){
+        const q = el('q_full').value.trim(); if(!q) return;
+        const res = await fetch(`/api/search?q=${encodeURIComponent(q)}&limit=100`);
+        const data = await res.json(); renderFullResults(data);
+      }
+      async function doLookupFull(){
+        const m = el('mobile_full').value.trim(); if(!m) return;
+        const res = await fetch(`/api/lookup?mobile=${encodeURIComponent(m)}`);
+        if(res.status===200){ renderFullResults([await res.json()]); } else { el('results_full').innerText='No exact match found'; }
+      }
+      function renderFullResults(items){
+        const out = el('results_full'); if(!out) return; if(!items || items.length===0){ out.innerHTML='No results'; return; }
+        let html = '<div style="display:grid;gap:10px">';
+        items.slice(0,30).forEach(it=>{
+          html += `<div style="padding:12px;border-radius:12px;background:#fff;border:1px solid rgba(11,103,208,0.04)"><div style="font-weight:800">${it.name}</div><div class="small muted">${it.category} • ${it.region} • ${it.location}</div><div style="margin-top:6px">${it.contact_person} • <strong>${it.mobile}</strong></div></div>`;
+        });
+        html += '</div>';
+        out.innerHTML = html;
+      }
+
+      document.addEventListener('click', (ev)=>{
+        if(ev.target && ev.target.id==='search_full') doSearchFull();
+        if(ev.target && ev.target.id==='lookup_full') doLookupFull();
+      });
+
+      // Enter key behavior
+      document.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ if(document.activeElement && document.activeElement.id==='q_full') document.getElementById('search_full').click(); if(document.activeElement && document.activeElement.id==='mobile_full') document.getElementById('lookup_full').click(); } });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Gatician Solutions — TransportNagar Lookup</title>
+    <style>
+      :root{
+        --bg:#f5f9ff;
+        --card:#ffffff;
+        --accent:#0b67d0; /* primary blue */
+        --accent-2:#0f4fb3;
+        --muted:#6b7280;
+        --radius:10px;
+        --shadow: 0 6px 18px rgba(12,38,86,0.08);
+      }
+      *{box-sizing:border-box}
+      body{font-family:Inter,Segoe UI,Helvetica,Arial,sans-serif;background:var(--bg);margin:0;color:#0b2840}
+      header{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;padding:18px 24px;display:flex;align-items:center;gap:16px}
+      .brand{font-weight:700;font-size:1.05rem}
+      .brand-sub{font-weight:500;opacity:0.9;font-size:0.85rem}
+      .container{max-width:1100px;margin:26px auto;padding:0 20px}
+
+      .panel{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+    </style>
+    <link rel="stylesheet" href="/styles.css" />
+    <script defer src="/scripts.js"></script>
+  </head>
+
+  <body>
+    <header>
+        <div class="header-row" style="justify-content:space-between;display:flex;width:100%">
+        <div style="display:flex;align-items:center;gap:12px">
+          <img src="/assets/Gatician%20Logo.png" alt="Gatician Logo" style="height:46px;width:auto;border-radius:8px;background:white;padding:4px"/>
+          <div style="display:flex;flex-direction:column">
+            <div class="brand">Gatician Solutions Pvt. Ltd</div>
+            <div class="brand-sub">Your go to Logistics Partner</div>
+          </div>
+        </div>
+        <nav class="site-nav">
+          <button class="nav-toggle" aria-label="Open menu">☰</button>
+          <ul class="nav-list" role="menu">
+            <li><a href="/" style="color:white;text-decoration:none;font-weight:600">Home</a></li>
+            <li><a href="/team" style="color:white;text-decoration:none;font-weight:600">Team</a></li>
+            <li><a id="lookupLink" href="/lookup" style="color:white;text-decoration:none;font-weight:600">Lookup</a></li>
+            <li><a class="btn login-outline" href="https://gatician-gps.vercel.app/login" target="_blank" rel="noopener noreferrer">Login</a></li>
+            <li><button class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+            <svg data-icon="sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><path d="M12 2v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M12 20v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M4.93 4.93l1.41 1.41" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M17.66 17.66l1.41 1.41" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M2 12h2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M20 12h2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M4.93 19.07l1.41-1.41" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <svg data-icon="moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-graphic" aria-hidden="true">
+          <!-- decorative arc and shapes to mimic the template -->
+          <svg viewBox="0 0 1200 240" preserveAspectRatio="none" class="hero-arc"><path d="M0 160 C300 60, 900 60, 1200 160 L1200 240 L0 240 Z" fill="url(#g)"/></svg>
+          <svg style="display:none"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0%" stop-color="#1a3aff" stop-opacity="1"/><stop offset="100%" stop-color="#3d2bff" stop-opacity="1"/></linearGradient></defs></svg>
+        </div>
+
+        <div class="container hero-inner">
+          <div class="hero-left fade-up">
+            <div class="kicker small muted">Elevating the world of</div>
+            <h1 class="hero-title">Logistics.</h1>
+            <p class="hero-lead">We set the standard in transporting goods from A to B — fast, reliable and transparent.</p>
+
+            <div class="hero-cta">
+              <button id="openModal" class="btn btn-cta">Get a Quote</button>
+              <a class="btn secondary" href="#features">Discover services</a>
+              <div class="call">Call us: <a href="tel:+914000000000" class="link">+91 70000 00000</a></div>
+            </div>
+          </div>
+
+          <div class="hero-right fade-up">
+            <div class="truck-card panel">
+              <!-- Truck image (hotlinked placeholder from picsum) -->
+              <img src="https://picsum.photos/640/360?random=12" alt="Truck" style="width:100%;height:auto;border-radius:12px;object-fit:cover" />
+            </div>
+            <div class="lookup-compact panel">
+              <div style="font-weight:700;margin-bottom:6px">Quick Transporter Lookup</div>
+              <div class="small muted">Search by company, location, or phone.</div>
+              <div style="margin-top:10px" class="lookup-rows">
+                <div class="search-row"><input id="q" class="search-input" placeholder="Search company, location or mobile" /><button id="search" class="btn">Search</button></div>
+                <div class="lookup-row"><input id="mobile" class="phone-input" placeholder="Enter mobile or landline" /><button id="lookup" class="btn">Lookup</button></div>
+                <div id="results" style="margin-top:10px"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Booking modal (re-usable) -->
+      <div id="bookingModal" class="modal" aria-hidden="true">
+        <div class="modal-inner panel">
+          <div class="modal-head"><div><strong>Get a Price Estimate</strong><div class="small muted">Enter pickup & drop and approximate distance/weight.</div></div><button id="closeModal" class="btn secondary">Close</button></div>
+          <div class="modal-body">
+            <div class="grid-two">
+              <input id="pickup" placeholder="Pickup city / location" />
+              <input id="drop" placeholder="Drop city / location" />
+              <input id="distance" placeholder="Approx distance (km) - optional" type="number" />
+              <input id="weight" placeholder="Weight (kg)" type="number" />
+            </div>
+            <div style="margin-top:12px;display:flex;gap:10px;align-items:center">
+              <button id="estimateBtn" class="btn">Estimate</button>
+              <div id="estimateResult" class="small muted"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="features" class="services fade-up">
+        <div class="container">
+          <div class="section-head"><h3>From cargo transit to warehousing,</h3><h2 class="accent">we offer unparalleled support.</h2></div>
+
+          <div class="grid services-grid">
+            <div class="service-card card"><img src="https://picsum.photos/420/240?random=31" alt="air"/><h4>Air Freight</h4><p class="small muted">In airfreight, the only constant is change — it's the heartbeat of the sector.</p><a class="link" href="#">Learn more</a></div>
+            <div class="service-card card"><img src="https://picsum.photos/420/240?random=32" alt="ocean"/><h4>Ocean Freight</h4><p class="small muted">Your unique ocean freight needs drive our specialized service offerings.</p><a class="link" href="#">Learn more</a></div>
+            <div class="service-card card"><img src="https://picsum.photos/420/240?random=33" alt="land"/><h4>Land Express</h4><p class="small muted">Adaptive solutions and superior service for time-sensitive deliveries.</p><a class="link" href="#">Learn more</a></div>
+          </div>
+
+          <div class="stats">
+            <div class="stat"><div class="big-outline">99%</div><div class="small muted">Client satisfaction</div></div>
+            <div class="stat"><div class="big-outline">13</div><div class="small muted">Years of experience</div></div>
+            <div class="stat"><div class="big-outline">570</div><div class="small muted">Clients worldwide</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="promo fade-up">
+        <div class="container promo-inner">
+          <div class="promo-card panel">
+            <div class="promo-left">
+              <div class="kicker small">About us</div>
+              <h3>Logistics technology's future</h3>
+              <p class="small muted">We combine domain expertise and modern tooling to make freight simple.</p>
+              <a class="btn" href="#">Learn more</a>
+            </div>
+            <div class="promo-right"><img src="https://picsum.photos/800/520?random=13" alt="Promo" style="width:100%;height:auto;border-radius:12px;object-fit:cover"/></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="testimonials fade-up">
+        <div class="container">
+          <h3>Discover what our satisfied clients are saying about us.</h3>
+          <div class="carousel" id="testimonialsCarousel">
+            <div class="slides">
+              <div class="slide card">I've worked with several logistics platforms in the past, but this website truly stands out.<div class="small muted">— Katie M., Marketing Manager</div></div>
+              <div class="slide card">Reliable, intuitive and fast — booking and tracking is seamless.<div class="small muted">— Suresh K., Supply Chain</div></div>
+              <div class="slide card">Good coverage and professional support during claims.<div class="small muted">— Nisha P., Operations</div></div>
+            </div>
+            <div class="dots" id="testDots"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="blog fade-up">
+        <div class="container">
+          <h3>Discover the latest tips, trends and ideas.</h3>
+          <div class="grid blog-grid">
+            <article class="card"><img src="https://picsum.photos/480/280?random=21" alt="blog"/><h4>Key trends shaping the logistics</h4><a class="link" href="#">Read more</a></article>
+            <article class="card"><img src="https://picsum.photos/480/280?random=22" alt="blog"/><h4>Best practices for supply chain</h4><a class="link" href="#">Read more</a></article>
+            <article class="card"><img src="https://picsum.photos/480/280?random=23" alt="blog"/><h4>Technological advancements</h4><a class="link" href="#">Read more</a></article>
+          </div>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <div class="container footer-inner">
+          <div class="brand-block">
+            <img src="/assets/Gatician%20Logo.png" alt="Gatician" style="height:44px;"/>
+            <p class="small muted">Turn to Gatician for the best-in-class logistics platform tailored for modern freight.</p>
+          </div>
+          <div class="footer-nav">
+            <div><strong>Navigation</strong><ul><li><a href="#">Home</a></li><li><a href="#">About</a></li><li><a href="#">Services</a></li></ul></div>
+            <div><strong>Practice Areas</strong><ul><li><a href="#">Air Freight</a></li><li><a href="#">Ocean Freight</a></li><li><a href="#">Land Express</a></li></ul></div>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+      <script>
+        // reuse search/lookup handlers from earlier UI
+        const el = id => document.getElementById(id);
+        function escapeHtml(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+        function formatPhone(p){ if(!p) return ''; if(p.length===10) return p.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'); return p; }
+
+        async function doSearch(q){
+          if(!q) return;
+          const res = await fetch(`/api/search?q=${encodeURIComponent(q)}&limit=50`);
+          const data = await res.json();
+          renderResults(data);
+        }
+
+        function renderResults(items){
+          const out = el('results');
+          if(!out) return;
+          if(!items || (Array.isArray(items) && items.length===0)){
+            out.innerHTML = '<div class="small" style="padding:10px;color:var(--muted)">No results</div>';
+            return;
+          }
+          if(!Array.isArray(items)) items = [items];
+          let html = '<div style="display:grid;grid-template-columns:1fr;gap:8px">';
+          for(const it of items.slice(0,6)){
+            html += `<div style="padding:8px;border-radius:8px;background:#fbfdff;border:1px solid rgba(11,103,208,0.04)"><div style="font-weight:700">${escapeHtml(it.name)}</div><div class="small">${escapeHtml(it.category)} • ${escapeHtml(it.region)}</div><div style="margin-top:6px" class="small">${escapeHtml(it.contact_person)} • <strong>${formatPhone(it.mobile)}</strong></div></div>`;
+          }
+          html += '</div>';
+          out.innerHTML = html;
+        }
+
+        document.addEventListener('click', async (ev)=>{
+          if(ev.target && ev.target.id==='search'){
+            const q = el('q').value.trim(); await doSearch(q);
+          }
+          if(ev.target && ev.target.id==='lookup'){
+            const m = el('mobile').value.trim(); if(!m) return; const res = await fetch(`/api/lookup?mobile=${encodeURIComponent(m)}`); if(res.status===200){ const d = await res.json(); renderResults(d); } else { el('results').innerHTML = '<div class="small" style="padding:10px;color:var(--muted)">No exact match found</div>'; }
+          }
+          if(ev.target && ev.target.id==='openModal'){
+            el('bookingModal').style.display='flex';
+          }
+          if(ev.target && ev.target.id==='closeModal'){
+            el('bookingModal').style.display='none';
+          }
+          if(ev.target && ev.target.id==='estimateBtn'){
+            const dist = parseFloat(el('distance').value) || 0;
+            const weight = parseFloat(el('weight').value) || 0;
+            // simple prototype pricing formula
+            const base = 299;
+            const perKm = 12; // prototype
+            const perKg = 5; // prototype
+            const estimate = Math.round(base + (dist * perKm) + (weight * perKg));
+            el('estimateResult').innerText = `Estimated price: ₹${estimate}`;
+          }
+        });
+
+        // keyboard Enter triggers search
+        document.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ if(document.activeElement && document.activeElement.id==='q'){ document.getElementById('search').click(); } if(document.activeElement && document.activeElement.id==='mobile'){ document.getElementById('lookup').click(); } } });
+      </script>
