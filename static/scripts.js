@@ -17,36 +17,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     if(ev.target && ev.target.id==='closeModal') document.getElementById('bookingModal')?.classList.remove('show');
   });
 
-  // Theme toggle: persist in localStorage and respect prefers-color-scheme
-  const THEME_KEY = 'gatician_theme';
-  function applyTheme(theme){
-    if(!theme) return;
-    document.documentElement.setAttribute('data-theme', theme);
-    if(theme === 'dark') document.documentElement.classList.add('dark'); else document.documentElement.classList.remove('dark');
-  }
-
-  function initTheme(){
-    const saved = localStorage.getItem(THEME_KEY);
-    if(saved){ applyTheme(saved); return; }
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    applyTheme(prefersDark ? 'dark' : 'light');
-  }
-  initTheme();
-  const toggles = Array.from(document.querySelectorAll('.theme-toggle'));
-  function updateToggleStates(){
-    const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-    toggles.forEach(btn=>btn.setAttribute('data-state', current));
-  }
-  updateToggleStates();
-  toggles.forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const cur = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-      const next = cur === 'dark' ? 'light' : 'dark';
-      applyTheme(next);
-      localStorage.setItem(THEME_KEY, next);
-      updateToggleStates();
-    });
-  });
+  // Theme toggle removed — site has a single light theme for consistency.
 
   // Simple testimonials carousel
   (function initCarousel(){
